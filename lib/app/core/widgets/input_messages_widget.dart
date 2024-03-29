@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class InputMessagesWidget extends StatelessWidget {
   final void Function()? sendMessage;
   final void Function(String)? getText;
+  final TextEditingController? controller;
 
   const InputMessagesWidget({
     super.key,
     required this.sendMessage,
     required this.getText,
+    required this.controller,
   });
 
   @override
@@ -22,6 +24,7 @@ class InputMessagesWidget extends StatelessWidget {
           color: Colors.grey.shade200,
         ),
         child: TextField(
+          controller: controller,
           onChanged: getText,
           onTapOutside: (PointerDownEvent event) {
             FocusScope.of(context).requestFocus(focus);
@@ -35,9 +38,9 @@ class InputMessagesWidget extends StatelessWidget {
             hintStyle: TextStyle(
               color: Colors.grey.shade500,
             ),
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.send_rounded),
-              onPressed: sendMessage,
+            suffixIcon: GestureDetector(
+              onTap: sendMessage,
+              child: const Icon(Icons.send_rounded),
             ),
           ),
         ),
